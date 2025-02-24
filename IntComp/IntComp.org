@@ -1,0 +1,63 @@
+#+TITLE: IntComputer Definition
+#+DESCRIPTION: Defines Int Computer for cop3503C to review exam Topics
+#+AUTHOR: Aiden Thomas
+#+HTML_HEAD_EXTRA: <style> pre.src { background-color: black; color: white; }</style>
+
+* Write a Class that follows this format
+#+BEGIN_SRC cpp
+class IntComp{
+ private:
+    //Not fully Implemented
+    char* memory;
+    int counter;
+ public:
+    IntComp(int);
+
+    IntComp& operator+=(std::vector<int>);
+    IntComp& operator++();
+    IntComp& operator--();
+    void setMemory(char*);
+
+    char* getMemory();
+}
+#+END_SRC
+
+* Function definitions are below.
+a) operator+=()
+
+   Takes in a Vector of $3$ commands that are as follows:
+   1. operator ($+,-,*,/$):(0,1,2,3)
+   2. value ($0-100$)
+   3. Place in Memory to store
+
+ - ex.
+  * Input: {$0, 34, 5$}
+  * Memory: [0|0|0|0|0|0]
+  * Command: Memory[5] = Memory[counter]+34;
+     counter++;
+
+b) operator++()
+
+  Increments $counter$ by 1
+
+c) operator+-()
+
+  Decrement $counter$ by 1
+
+d) setMemory(char*)
+
+  Take in a pointer and set the current memory to the new memory
+
+d) getMemory()
+
+  return the current Memory block
+
+
+
+*** Part 2
+ * Turn this class into a Template Class.
+*** Part 3
+ * Manipulate the memory using only \emph{Pointer Arithmatic}
+*** Part 4
+ * Complete this Challenge on AoC
+   https://adventofcode.com/2019/day/2

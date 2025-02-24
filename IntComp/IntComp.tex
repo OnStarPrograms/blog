@@ -1,0 +1,96 @@
+% Created 2025-02-23 Sun 21:17
+% Intended LaTeX compiler: pdflatex
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{wrapfig}
+\usepackage{rotating}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{capt-of}
+\usepackage{hyperref}
+\author{Aiden Thomas}
+\date{\today}
+\title{IntComputer Definition}
+\hypersetup{
+ pdfauthor={Aiden Thomas},
+ pdftitle={IntComputer Definition},
+ pdfkeywords={},
+ pdfsubject={Defines Int Computer for cop3503C to review exam Topics},
+ pdfcreator={Emacs 29.3 (Org mode 9.7.22)}, 
+ pdflang={English}}
+\begin{document}
+
+\maketitle
+\tableofcontents
+
+\section{Write a Class that follows this the format}
+\label{sec:org1c47e8c}
+\begin{verbatim}
+class IntComp{
+ private:
+    //Not fully Implemented
+    char* memory;
+    int counter;
+ public:
+    IntComp(int);
+
+    IntComp& operator+=(std::vector<int>);
+    IntComp& operator++();
+    IntComp& operator--();
+    void setMemory(char*);
+
+    char* getMemory();
+}
+\end{verbatim}
+\section{Function definitions are below.}
+\label{sec:org91b76d9}
+\begin{enumerate}
+\item operator+=()
+
+Takes in a Vector of \(3\) commands that are as follows:
+\begin{enumerate}
+\item operator (\(+,-,*,/\)):(0,1,2,3)
+\item value (\(0-100\))
+\item Place in Memory to store
+\end{enumerate}
+
+\item ex.
+\begin{itemize}
+\item Input: \{\(0, 34, 5\)\}
+\item Memory: [0|0|0|0|0|0]
+\item Command: Memory[5] = Memory[counter]+34; counter++;
+\end{itemize}
+
+\item operator++()
+Increments \(counter\) by 1
+
+\item operator+-()
+Decrement \(counter\) by 1
+
+\item setMemory(char*)
+Take in a pointer and set the current memory to the new memory
+
+\item getMemory()
+return the current Memory block
+\end{enumerate}
+\subsubsection{Part 2}
+\label{sec:orgaa4286d}
+\begin{itemize}
+\item Turn this class into a Template Class.
+\end{itemize}
+\subsubsection{Part 3}
+\label{sec:orga002479}
+\begin{itemize}
+\item Manipulate the memory using only \emph{Pointer Arithmatic}
+\end{itemize}
+\subsubsection{Part 4}
+\label{sec:org7fb4481}
+\begin{itemize}
+\item Complete this Challenge on AoC
+\url{https://adventofcode.com/2019/day/2}
+\end{itemize}
+\end{document}
