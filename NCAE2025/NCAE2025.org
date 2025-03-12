@@ -1,0 +1,178 @@
+#+TITLE: NCAE 2025
+#+DESCRIPTION: A debrief on the National Cyber Alliance Experience (NCAE) 2025, focusing on the author's experience defending a web server and an Apache server throughout the cybergames.
+#+AUTHOR: Aiden Thomas
+#+HTML_HEAD_EXTRA: <style> pre.src { background-color: black; color: white; }</style>
+
+* NCAE Regionals and Nationals
+The NCAE regionals have concluded, and the University of Florida (UF) Blue teams are gearing up for Nationals. Both teams have reached approximately 400 points, with one UF team preparing to participate in the NCAE Nationals.
+
+
+* Defending the Web Server and Apache Server
+** Pre-engagement
+At 11:00 AM EST in the Northwest region, the UF NCAE team 2 gathered, and we began the day with laughter and joy. We divided the network into sections, and I was assigned the Ubuntu-based database with Postgres installed.
+This will be a fun experience for everyone sitting together.
+#+CAPTION: Competition Topology
+#+NAME:   fig:Topology
+[[./Topology.png]]
+** 11:00 - Engagement Begins
+The flags have raised, and the starter pistol fired, signaling the start of the engagement. We logged in to our respective machines and began system hardening, preparing for the incoming attacks from the red team.
+** 11:02 - Time is Ticking
+Time is already ticking, we log in, 2 minutes already gone. Someone doesn't have their credentials properly set up, that will take atleast 5 mins for them. we don't have enought time to stop. I keep going, trying to connect to webservices. The router is down, I can't update my packages.
+** 11:05
+Time flies away faster before the grace period ends, I find three user accounts with UID 0.
+#+BEGIN_SRC shell
+cat /etc/passwd | grep ":0:"
+root
+blackteam_r
+no_one
+#+END_SRC
+"no_one" (get it? no one) should have root except me, we take their access away. sorry no_one. we set their _/bin/bash_ to _/dev/null_ no one is getting access
+** 11:10
+Time flows through sand, I am running out of time. I try to run IPTables. Bash error
+#+BEGIN_SRC shell
+iptables
+Command 'iptables' not found
+#+END_SRC
+Firewall-d.
+Nothing
+UFW.
+Nothing.
+All firewalls compromised. I don't have much time
+#+BEGIN_SRC shell
+sudo apt install iptables
+#+END_SRC
+Nothing printed, something is wrong. red team is getting closer.
+** 11:15
+In an act of desperation I use canonicals SNAP package system and get UFW installed.
+*UFW requires IPtables*
+Plan backfired. but what about curl.
+[[https://netfilter.org/projects/iptables/downloads.html]]
+#+BEGIN_SRC shell
+curl -O https://netfilter.org/projects/iptables/files/iptables-1.8.11.tar.xz
+#+END_SRC
+you can download IPTables from the web.
+#+BEGIN_SRC shell
+iptables -A INPUT -p 5432 -j ACCEPT
+iptables -A OUTPUT -p 5432 -j ACCEPT
+iptables -A INPUT -j DROP
+iptables -A OUTPUT -j DROP
+#+END_SRC
+(Not all commands used listed)
+** 11:25
+after running those system commands, attackers already got into my system. I need to ignore them for now, and get our services up.
+After starting postgres we Nmapped the system and realized something is wrong within, Nmap is returning "filtered"
+- Config Files
+  Postgres has Configuration files. something happened to them. we discovered it to have mismatched ports. fixed.
+Now its time to stop attackers
+** 11:50
+Working through the commands we discovered threat actor after threat actor
+#+BEGIN_SRC shell
+ss -tualn
+ss -tulpn
+tcpdump
+who -u
+ps -ejH
+#+END_SRC
+** 12:30
+For now my system was safe, There were active threats online, but as systems were running, they become ignored.
+Web is having trouble, an hour and 30 minutes have passed, and not even the web port is running.
+** 12:45
+It took 15 minutes to find the error, a misconfiguration in the nginx server, where it was hogging the port, but couldn't host the site.
+** 1:00
+Another 15 minutes gone, yet another misconfiguration found in the router, port 80 isn't forwarded.
+** By now everyone started their services
+Defense is everything, IPTables installed on the webserver.
+Annoyance is best
+in the Postgres server for an hour and half we ran
+#+BEGIN_SRC python
+import subprocess
+while(True):
+    subprocess.pfork("wall 'I love Red Team <3'")
+#+END_SRC
+Till the end we continued to defend our system, till the end
+** 4:30
+We lost all our systems except port 80, and the Router.
+Even with IPTables, both of my systems enacted were severely compromised, and the system keyboard, changed to german.
+
+* At the end of the day, we learned more about the keys of cyber security and team work.
+
+
+
+
+11:05 - Discovery of UID 0 Accounts
+
+I discovered three user accounts with UID 0.
+
+org
+
+#+BEGIN_SRC shell
+cat /etc/passwd | grep ":0:"
+root
+blackteam_r
+no_one
+#+END_SRC
+
+The no_one account should not have root access, but it did. We revoked their access and set their shell to /dev/null.
+11:10 - Firewall Compromise
+
+I tried to install IPTables, but it was not found.
+
+#+BEGIN_SRC shell
+iptables
+Command 'iptables' not found
+#+END_SRC
+
+I attempted to use UFW and Firewall-D, but both were compromised. I eventually used the Canonical SNAP package system to install UFW.
+11:15 - Desperation Sets In
+
+I downloaded IPTables from the web and installed it.
+
+org
+
+#+BEGIN_SRC shell
+curl -O https://netfilter.org/projects/iptables/downloads.html
+#+END_SRC
+
+I then configured IPTables to allow incoming traffic on port 5432 and drop all other incoming traffic.
+
+org
+
+#+BEGIN_SRC shell
+iptables -A INPUT -p 5432 -j ACCEPT
+iptables -A OUTPUT -p 5432 -j ACCEPT
+iptables -A INPUT -j DROP
+iptables -A OUTPUT -j DROP
+#+END_SRC
+
+11:25 - Attackers Gain Access
+
+Despite my efforts, attackers had already gained access to my system. I focused on getting our services up and running.
+11:50 - Identifying Threat Actors
+
+I used various commands to identify and eliminate threat actors.
+
+org
+
+#+BEGIN_SRC shell
+ss -tualn
+ss -tulpn
+tcpdump
+who -u
+ps -ejH
+#+END_SRC
+
+12:30 - Systems Running Smoothly
+
+For a while, my system was safe, and the threats were being ignored.
+12:45 - Web Server Issues
+
+We encountered issues with the web server, which took 15 minutes to resolve due to a misconfiguration in the nginx server.
+1:00 - Router Issues
+
+Another 15 minutes were lost due to a misconfiguration in the router, which prevented port 80 from being forwarded.
+4:30 - Systems Compromised
+
+We lost all our systems except for port 80 and the router. Our systems were severely compromised, and the keyboard was changed to German.
+Conclusion
+
+At the end of the day, we learned valuable lessons about cybersecurity and teamwork.
