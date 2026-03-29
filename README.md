@@ -2,7 +2,7 @@
 
 ## Overview  
 
-This was were I was testing if I could right a blog in Tex. resulting in only two webpages created, My NCAE 2025 writeup, and an assignment for Prog 2 students.
+This was where I was testing if I could right a blog in Tex. resulting in only two webpages created, My NCAE 2025 writeup, and an assignment for Prog 2 students.
 
 ## Why Is This Still Online?  
 
